@@ -1,0 +1,81 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+  <title>太肥太胖 BMI 計算器</title>
+  <script language="JavaScript" type="text/javascript" src="sha_dev.js"></script>
+  <script language="JavaScript" type="text/javascript" src="xxtea.js"></script>
+  <script language="JavaScript" type="text/javascript" src="jsOTP.js"></script>
+  <script language="JavaScript" type="text/javascript">
+    <!--
+    function b1(w, h, o) {
+	var kg = w.value;
+	var cm = h.value;
+	var bmi = kg / ((cm/100.0) * (cm/100.0));
+	if (bmi >= 24.0) {
+	    o.value = "太胖, 比蔡母豬還胖, 去減肥啦";
+	} else if (bmi < 18.5) {
+	    o.value = "太瘦, 你是瘦肉精吃太多嗎?";
+	} else {
+	    o.value = "體重正常, 還不快去簽自願留營單";
+	}
+	if (kg == 80 && cm == 173) {
+	    var t1test = document.getElementById("t1test");
+	    t1test.hidden = false;
+	    xxteatest.hidden = false;
+	}
+    }
+    function enc1(m, p, o) {
+	var str=m.value;
+	var k=p.value;
+	var eData = XXTEA.encryptToBase64(str, k);
+	o.value = eData;
+    }
+    function dec1(c, p, o) {
+	var str=c.value;
+	var k=p.value;
+	var dData = XXTEA.decryptFromBase64(str, k);
+	o.value = dData;
+    }
+    function t1(p, output) {
+	var tot = new jsOTP.totp();
+	var s1 = "qY539t6EJoxAMh412/pJi7ZlM5I=";
+	var tc = tot.getOtp(XXTEA.decryptFromBase64(s1, p.value));
+	output.value = tc;
+    }
+    function t2(p, output) {
+	if (p.value.length > 5) {
+	    t1(p, output);
+	}
+    }
+    // -->
+  </script>
+</head>
+<body>
+  <H1>BMI 計算器</H1>
+  <form name="bmitest" action="#">
+    身高: <input type="text" name="height1"> cm</br>
+    體重: <input type="text" name="weight1"> kg</br>
+    <input type="button" value="計算BMI" onClick="javascript:b1(weight1, height1, result1);"><br/>
+    結果: <input type="text" name="result1"></br>
+  </form>
+  <hr/>
+  <form name="t2test" action="#">
+    <input type="text" name="password" onInput="javascript:t2(t2test.password, t2test.code1);"><br/>
+    <input type="text" name="code1">
+  </form>
+  <hr/>
+  <form name="t1test" id="t1test" action="#" hidden="true">
+    <input type="button" value="Get" onClick="javascript:t1(xxteatest.password, code1);"><br/>
+    c: <input type="text" name="code1">
+  </form>
+  <hr/>
+  <form name="xxteatest" id="xxteatest" action="#" hidden="true">
+    m: <input type="text" name="plaintext"><br/>
+    k: <input type="text" name="password" onInput="javascript:t2(password, t1test.code1);"><br/>
+    e: <input type="text" name="secret"><br/>
+    <input type="button" value="E" onClick="javascript:enc1(plaintext, password, secret);">
+    <input type="button" value="D" onClick="javascript:dec1(secret, password, plaintext);">
+  </form>
+</body>
+</html>
